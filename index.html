@@ -8,18 +8,35 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/slim-select/dist/slimselect.min.css"
     />
+    
     <title>JS advanced HW 2</title>
+    <script
+      src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs"
+      type="module"
+    ></script>
     <script type="module" crossorigin src="/goit-advancedjs-hw-03/commonHelpers.js"></script>
     <link rel="modulepreload" crossorigin href="/goit-advancedjs-hw-03/assets/vendor-935e97f4.js">
+    <link rel="stylesheet" href="/goit-advancedjs-hw-03/assets/index-9850e68c.css">
   </head>
   <body>
-    <h1></h1>
-    <select id="selectElement"></select>
-    <p class="loader">Loading data, please wait...</p>
-    <p class="error">Oops! Something went wrong! Try reloading the page!</p>
-    <div class="cat-info"></div>
-
-    
+    <div class="container">
+      <!-- <div class="text-wrapper">
+        <h1>CatBreedsExplorer</h1>
+      </div> -->
+      <select class="select" id="selectElement"></select>
+      <div class="loader hidden">
+        <dotlottie-player
+          src="https://lottie.host/83300929-d826-4b53-8ce7-37a964fb2702/ZGHQjmTGQs.json"
+          background="transparent"
+          speed="1"
+          style="width: 300px; height: 300px"
+          loop
+          autoplay
+        ></dotlottie-player>
+      </div>
+      <p class="error">Oops! Something went wrong! Try reloading the page!</p>
+      <div class="cat-info"></div>
+    </div>
     
   </body>
 </html>
