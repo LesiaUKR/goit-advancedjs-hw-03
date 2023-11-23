@@ -10,9 +10,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #9e4f0b;
+  background-color: #210b01;
 
-  color: #fff;
+  color: white;
   line-height: 1.5;
 }
 
@@ -52,14 +52,33 @@ img {
 }
 
 .text-wrapper {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, 50);
+  text-align: center;
 }
 
-.text-wrapper h2 {
-  font-size: 40px;
+.text-wrapper h1 {
+  font-size: 120px;
+  color: #210b01;
+  text-shadow: 1px 0 6px #fc510a;
+  animation: text-animation 4s linear infinite;
+}
+
+@keyframes text-animation {
+  0% {
+    text-shadow: 1px 0 9px #3dbf0a;
+  }
+  25% {
+    text-shadow: 1px 0 15px #f0d62e;
+  }
+  50% {
+    text-shadow: 1px 0 20px red;
+  }
+
+  75% {
+    text-shadow: 1px 0 15px #f0d62e;
+  }
+  100% {
+    text-shadow: 1px 0 9px #3dbf0a;
+  }
 }
 
 .title {
