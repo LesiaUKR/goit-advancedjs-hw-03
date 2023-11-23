@@ -42,7 +42,9 @@ img {
   justify-content: center;
 }
 
-.loader.hidden {
+.loader.hidden,
+.cat-info.hidden,
+.select.hidden {
   display: none;
 }
 
