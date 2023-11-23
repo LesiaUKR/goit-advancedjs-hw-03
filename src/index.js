@@ -15,6 +15,9 @@ const breedSelect = new SlimSelect({
   // },
 });
 
+select.classList.add('hidden');
+loader.classList.remove('hidden');
+
 fetchBreeds()
   .then(data => {
     const options = [
@@ -29,10 +32,11 @@ fetchBreeds()
       })),
     ];
     breedSelect.setData(options);
-    select.addEventListener('change', onChangeSelect);
 
     select.classList.remove('hidden');
     loader.classList.add('hidden');
+
+    select.addEventListener('change', onChangeSelect);
   })
   .catch(err => {
     console.log(err);
