@@ -10,8 +10,7 @@ axios.defaults.headers.common['x-api-key'] = API_KEY;
 export const fetchBreeds = async () => {
   const responce = await axios.get(`${BASE_URL}${BREEDS_END_POINT}`);
   if (!responce || responce.status !== 200) {
-    console.log(responce);
-    throw new Error('Моя помилка');
+    throw new Error('Failed to fetch cat breeds');
   }
   return responce.data;
 };
@@ -21,7 +20,6 @@ export const fetchCatByBreed = async breedId => {
     `${BASE_URL}${IMAGE_END_POINT}?breed_ids=${breedId}`
   );
   if (!responce || responce.status !== 200) {
-    console.log(responce);
     throw new Error('Моя помилка');
   }
   return responce.data;

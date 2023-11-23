@@ -2,21 +2,21 @@ import SlimSelect from 'slim-select';
 import { fetchBreeds, fetchCatByBreed } from './cat-api';
 
 const catInfoBox = document.querySelector('.cat-info');
+const select = document.querySelector('#selectElement');
+const loader = document.querySelector('.loader');
 
 const breedSelect = new SlimSelect({
   select: '#selectElement',
   settings: {
     placeholderText: 'Search cats beeds',
   },
-  events: {
-    afterChange: onChangeSelect,
-  },
+  // events: {
+  //   afterChange: onChangeSelect,
+  // },
 });
-console.log(breedSelect);
 
 fetchBreeds()
   .then(data => {
-    console.log(data);
     const options = [
       {
         value: '',
@@ -28,35 +28,21 @@ fetchBreeds()
         text: `${name}`,
       })),
     ];
-
     breedSelect.setData(options);
-    // optionsMarkup(data);
+    select.addEventListener('change', onChangeSelect);
+
+    select.classList.remove('hidden');
+    loader.classList.add('hidden');
   })
-  .catch(err => console.log(err));
+  .catch(err => {
+    console.log(err);
+  });
 
-// function optionsMarkup(data) {
-//   const breedSelect = new SlimSelect({
-//     select: '#selectElement',
-//     data: [
-//       ...data.map(({ name, id }) => ({
-//         value: `${id}`,
-//         text: `${name}`,
-//       })),
-//     ],
-//     settings: {
-//       placeholderText: 'Search cats beeds',
-//     },
-//     events: {
-//       afterChange: onChangeSelect,
-//     },
-//   });
-//   console.log(breedSelect);
-// }
+function onChangeSelect(evt) {
+  const selectedValuesId = evt.target.value;
 
-function onChangeSelect(selectedOptions) {
-  console.log('onChangeSelect called');
-  const selectedValuesId = selectedOptions.map(option => option.value);
-  console.log('Selected Values IDs:', selectedValuesId);
+  loader.classList.remove('hidden');
+  catInfoBox.classList.add('hidden');
 
   fetchCatByBreed(selectedValuesId)
     .then(data => {
@@ -65,23 +51,26 @@ function onChangeSelect(selectedOptions) {
     })
     .catch(err => {
       console.error('FetchCatByBreed Error:', err);
+    })
+    .finally(() => {
+      loader.classList.add('hidden');
+      catInfoBox.classList.remove('hidden');
     });
 }
 
 function createMarkup(data) {
   const { url, breeds } = data[0];
-  if (!url || !breeds || breeds.length === 0) {
-    return 'No data available';
-  }
   const { name, alt_names, description, temperament } = breeds[0];
+
   const markup = `
   <div class="imgWrapper">
-  <img src="${url}" alt="${alt_names}" width=100% height=500 />
+<img class="image" src="${url}" alt="${alt_names}"/>
   </div>
   <div class="infoWrapper">
     <h2 class='title'>${name}</h2>
     <p class='description'>${description}</p>
-    <h3 class='subtitle'>${temperament}</h3>
+    <h3 class='title subtitle'>Temperament</h3>
+    <p class='temperament'>${temperament}</p>
   </div>
   `;
   catInfoBox.innerHTML = markup;
