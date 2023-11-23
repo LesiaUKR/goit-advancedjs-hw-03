@@ -1,10 +1,12 @@
 import SlimSelect from 'slim-select';
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
 import { fetchBreeds, fetchCatByBreed } from './cat-api';
 
 const catInfoBox = document.querySelector('.cat-info');
 const select = document.querySelector('#selectElement');
 const loader = document.querySelector('.loader');
-
+const error = document.querySelector('.error');
 const breedSelect = new SlimSelect({
   select: '#selectElement',
   settings: {
@@ -34,7 +36,16 @@ fetchBreeds()
   })
   .catch(err => {
     loader.classList.add('visually-hidden');
-    console.log(err);
+    error.classList.remove('visually-hidden');
+    iziToast.show({
+      message: 'Failed to fetch cat breeds',
+      messageColor: 'red',
+      messageSize: '18px',
+      backgroundColor: '#ffffff',
+      position: 'topRight',
+      timeout: 2500,
+    });
+    console.log(err.message);
   });
 
 function onChangeSelect(evt) {
@@ -51,7 +62,16 @@ function onChangeSelect(evt) {
     .catch(err => {
       catInfoBox.innerHTML = '';
       loader.classList.add('visually-hidden');
-      console.error('FetchCatByBreed Error:', err);
+      error.classList.remove('visually-hidden');
+      iziToast.show({
+        message: 'Error fetching cat by breed',
+        messageColor: 'red',
+        messageSize: '18px',
+        backgroundColor: '#ffffff',
+        position: 'topRight',
+        timeout: 2500,
+      });
+      console.log(err.message);
     })
     .finally(() => {
       loader.classList.add('visually-hidden');

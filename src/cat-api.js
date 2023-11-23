@@ -20,7 +20,7 @@ export const fetchCatByBreed = async breedId => {
     `${BASE_URL}${IMAGE_END_POINT}?breed_ids=${breedId}`
   );
   if (!responce || responce.status !== 200) {
-    throw new Error('Моя помилка');
+    throw new Error('Error fetching cat by breed');
   }
   return responce.data;
 };
