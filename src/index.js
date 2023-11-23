@@ -10,13 +10,7 @@ const breedSelect = new SlimSelect({
   settings: {
     placeholderText: 'Search cats beeds',
   },
-  // events: {
-  //   afterChange: onChangeSelect,
-  // },
 });
-
-select.classList.add('hidden');
-loader.classList.remove('hidden');
 
 fetchBreeds()
   .then(data => {
@@ -33,20 +27,21 @@ fetchBreeds()
     ];
     breedSelect.setData(options);
 
-    select.classList.remove('hidden');
-    loader.classList.add('hidden');
+    select.classList.remove('visually-hidden');
+    loader.classList.add('visually-hidden');
 
     select.addEventListener('change', onChangeSelect);
   })
   .catch(err => {
+    loader.classList.add('visually-hidden');
     console.log(err);
   });
 
 function onChangeSelect(evt) {
   const selectedValuesId = evt.target.value;
 
-  loader.classList.remove('hidden');
-  catInfoBox.classList.add('hidden');
+  loader.classList.remove('visually-hidden');
+  catInfoBox.classList.add('visually-hidden');
 
   fetchCatByBreed(selectedValuesId)
     .then(data => {
@@ -54,11 +49,13 @@ function onChangeSelect(evt) {
       createMarkup(data);
     })
     .catch(err => {
+      catInfoBox.innerHTML = '';
+      loader.classList.add('visually-hidden');
       console.error('FetchCatByBreed Error:', err);
     })
     .finally(() => {
-      loader.classList.add('hidden');
-      catInfoBox.classList.remove('hidden');
+      loader.classList.add('visually-hidden');
+      catInfoBox.classList.remove('visually-hidden');
     });
 }
 
