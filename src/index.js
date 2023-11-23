@@ -1,7 +1,6 @@
 import SlimSelect from 'slim-select';
 import { fetchBreeds, fetchCatByBreed } from './cat-api';
 
-console.log(SlimSelect);
 const catInfoBox = document.querySelector('.cat-info');
 
 const breedSelect = new SlimSelect({
@@ -31,25 +30,49 @@ fetchBreeds()
     ];
 
     breedSelect.setData(options);
+    // optionsMarkup(data);
   })
   .catch(err => console.log(err));
 
+// function optionsMarkup(data) {
+//   const breedSelect = new SlimSelect({
+//     select: '#selectElement',
+//     data: [
+//       ...data.map(({ name, id }) => ({
+//         value: `${id}`,
+//         text: `${name}`,
+//       })),
+//     ],
+//     settings: {
+//       placeholderText: 'Search cats beeds',
+//     },
+//     events: {
+//       afterChange: onChangeSelect,
+//     },
+//   });
+//   console.log(breedSelect);
+// }
+
 function onChangeSelect(selectedOptions) {
+  console.log('onChangeSelect called');
   const selectedValuesId = selectedOptions.map(option => option.value);
-  console.log(selectedValuesId);
+  console.log('Selected Values IDs:', selectedValuesId);
 
   fetchCatByBreed(selectedValuesId)
     .then(data => {
-      console.log(data);
-      catInfoBox.innerHTML = createMarkup(data);
+      console.log('FetchCatByBreed Response:', data);
+      createMarkup(data);
     })
     .catch(err => {
-      console.log(err);
+      console.error('FetchCatByBreed Error:', err);
     });
 }
 
 function createMarkup(data) {
   const { url, breeds } = data[0];
+  if (!url || !breeds || breeds.length === 0) {
+    return 'No data available';
+  }
   const { name, alt_names, description, temperament } = breeds[0];
   const markup = `
   <div class="imgWrapper">
@@ -61,5 +84,5 @@ function createMarkup(data) {
     <h3 class='subtitle'>${temperament}</h3>
   </div>
   `;
-  return markup;
+  catInfoBox.innerHTML = markup;
 }
