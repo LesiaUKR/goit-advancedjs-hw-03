@@ -11,7 +11,7 @@ const error = document.querySelector('.error');
 const breedSelect = new SlimSelect({
   select: '#selectElement',
   settings: {
-    placeholderText: 'Search cats beeds',
+    placeholderText: 'Search cats breeds',
   },
 });
 
